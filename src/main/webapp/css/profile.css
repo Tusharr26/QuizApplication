@@ -1,0 +1,44 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f2f4f8;
+    margin: 0;
+    padding: 0;
+}
+
+.profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+.profile-card {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 300px;
+}
+
+.icon {
+    margin-bottom: 20px;
+    color: #444;
+}
+
+h2 {
+    margin: 10px 0;
+}
+
+p {
+    margin: 5px 0;
+    color: #555;
+}
+
+.back-btn {
+    margin-bottom: 20px;
+    text-decoration: none;
+    color: #007BFF;
+    font-weight: bold;
+}

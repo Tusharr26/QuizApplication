@@ -1,0 +1,601 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Quiz App</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/index.css">
+    <style>
+    /* --------------------------------------------
+   Quiz App Homepage - Professional Styling
+   -------------------------------------------- */
+
+/* Base Elements & Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #f8f9fa;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  color: #2c3e50;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+h1 {
+  font-size: 2.75rem;
+  margin-bottom: 1.25rem;
+}
+
+h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  position: relative;
+}
+
+h2::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, #4a6cf7, #6c8fff);
+  margin: 0.75rem auto 2rem;
+  border-radius: 2px;
+}
+
+h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+p {
+  margin-bottom: 1.5rem;
+  color: #5d6778;
+}
+
+/* Button Styling */
+.btn {
+  display: inline-block;
+  padding: 0.875rem 1.75rem;
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.btn.primary {
+  background-color: #4a6cf7;
+  color: #fff;
+  box-shadow: 0 4px 8px rgba(74, 108, 247, 0.25);
+}
+
+.btn.primary:hover {
+  background-color: #3a5ad9;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(74, 108, 247, 0.3);
+}
+
+.btn.secondary {
+  background-color: #fff;
+  color: #4a6cf7;
+  border: 2px solid #4a6cf7;
+  margin-left: 1rem;
+}
+
+.btn.secondary:hover {
+  background-color: #f0f4ff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(74, 108, 247, 0.15);
+}
+
+/* Hero Section */
+.hero-section {
+  padding: 4rem 0;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9f2ff 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-section .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.hero-content {
+  flex: 1;
+  max-width: 600px;
+}
+
+.hero-content h1 {
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+}
+
+.hero-content p {
+  font-size: 1.25rem;
+  color: #5d6778;
+  margin-bottom: 2.5rem;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.hero-image {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.hero-image img {
+  max-width: 100%;
+  height: auto;
+  filter: drop-shadow(0 10px 20px rgba(74, 108, 247, 0.15));
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+/* Features Section */
+.features-section {
+  padding: 5rem 0;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+.feature-card {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 2.5rem 2rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07);
+  text-align: center;
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.feature-card.animated {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.feature-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+}
+
+.feature-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f4ff;
+  border-radius: 50%;
+}
+
+.feature-icon img {
+  width: 40px;
+  height: 40px;
+}
+
+.feature-card h3 {
+  color: #2c3e50;
+  margin-bottom: 1rem;
+}
+
+.feature-card p {
+  color: #5d6778;
+  font-size: 0.95rem;
+}
+
+/* Popular Quizzes Section */
+.popular-quizzes {
+  padding: 5rem 0;
+  background-color: #f0f4ff;
+}
+
+.quiz-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.quiz-card {
+  background-color: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.quiz-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+}
+
+.quiz-info {
+  padding: 2rem;
+  flex-grow: 1;
+}
+
+.quiz-info h3 {
+  font-size: 1.35rem;
+  margin-bottom: 0.75rem;
+  color: #2c3e50;
+}
+
+.quiz-info p {
+  color: #5d6778;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+}
+
+.quiz-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.quiz-meta span {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.category {
+  background-color: #e9ecef;
+  color: #495057;
+}
+
+.difficulty {
+  color: #fff;
+}
+
+.difficulty.easy {
+  background-color: #28a745;
+}
+
+.difficulty.medium {
+  background-color: #ffc107;
+}
+
+.difficulty.hard {
+  background-color: #dc3545;
+}
+
+.questions {
+  background-color: #e9f2ff;
+  color: #4a6cf7;
+}
+
+.quiz-card .btn {
+  margin: 0;
+  border-radius: 0;
+  padding: 1rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.view-all {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.view-all .btn {
+  padding: 1rem 2.5rem;
+}
+
+/* Call to Action Section */
+.cta-section {
+  padding: 5rem 0;
+  background: linear-gradient(135deg, #4a6cf7 0%, #6c8fff 100%);
+  color: #fff;
+  text-align: center;
+  border-radius: 12px;
+  margin: 3rem 0;
+}
+
+.cta-content {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.cta-content h2 {
+  color: #fff;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+.cta-content h2::after {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.cta-content p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.2rem;
+  margin-bottom: 2.5rem;
+}
+
+.cta-content .btn.primary {
+  background-color: #fff;
+  color: #4a6cf7;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.cta-content .btn.primary:hover {
+  background-color: #f8f9fa;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .hero-section .container {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .hero-content {
+    max-width: 100%;
+  }
+  
+  .hero-actions {
+    justify-content: center;
+  }
+  
+  .hero-image {
+    justify-content: center;
+    margin-top: 2rem;
+  }
+  
+  .hero-image img {
+    max-width: 80%;
+  }
+  
+  h1 {
+    font-size: 2.25rem;
+  }
+  
+  .feature-card {
+    padding: 2rem 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .quiz-cards {
+    grid-template-columns: 1fr;
+  }
+  
+  .features-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .btn.secondary {
+    margin-left: 0;
+    margin-top: 1rem;
+  }
+  
+  .hero-actions {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  h1 {
+    font-size: 2rem;
+  }
+  
+  h2 {
+    font-size: 1.75rem;
+  }
+  
+  .hero-content p {
+    font-size: 1.1rem;
+  }
+}
+
+/* Animations */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.feature-card:nth-child(1) { transition-delay: 0.1s; }
+.feature-card:nth-child(2) { transition-delay: 0.2s; }
+.feature-card:nth-child(3) { transition-delay: 0.3s; }
+.feature-card:nth-child(4) { transition-delay: 0.4s; }
+
+.hero-content h1,
+.hero-content p,
+.hero-actions {
+  animation: fadeUp 0.8s ease-out forwards;
+}
+
+.hero-content p {
+  animation-delay: 0.2s;
+}
+
+.hero-actions {
+  animation-delay: 0.4s;
+}
+
+/* Accessibility */
+:focus {
+  outline: 3px solid rgba(74, 108, 247, 0.25);
+  outline-offset: 2px;
+}
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <jsp:include page="include/header.jsp" />
+
+    <div class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Test Your Knowledge with Interactive Quizzes</h1>
+                <p>Challenge yourself with quizzes on various topics, track your progress, and compete with friends.</p>
+                <div class="hero-actions">
+                    <c:choose>
+                        <c:when test="${empty sessionScope.user}">
+                            <a href="${pageContext.request.contextPath}/auth/login" class="btn primary">Sign In</a>
+                            <a href="${pageContext.request.contextPath}/auth/register" class="btn secondary">Create Account</a>
+                        </c:when>
+                        <c:otherwise>
+                            <a href="${pageContext.request.contextPath}/dashboard" class="btn primary">My Dashboard</a>
+                            <a href="${pageContext.request.contextPath}/quizzes" class="btn secondary">Browse Quizzes</a>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="${pageContext.request.contextPath}/pics/quiz-illustration.jpg" alt="Quiz Illustration">
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <section class="features-section">
+            <h2>Why Choose Our Quiz Platform?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <img src="${pageContext.request.contextPath}/images/icons/diverse.svg" alt="Diverse Topics">
+                    </div>
+                    <h3>Diverse Topics</h3>
+                    <p>Explore quizzes across various categories including science, history, programming, and more.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <img src="${pageContext.request.contextPath}/images/icons/track.svg" alt="Track Progress">
+                    </div>
+                    <h3>Track Progress</h3>
+                    <p>Monitor your performance over time and see how you're improving in different subjects.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <img src="${pageContext.request.contextPath}/images/icons/compete.svg" alt="Compete">
+                    </div>
+                    <h3>Compete & Compare</h3>
+                    <p>Compare your scores with friends and see how you rank on our leaderboards.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <img src="${pageContext.request.contextPath}/images/icons/anywhere.svg" alt="Anywhere">
+                    </div>
+                    <h3>Quiz Anywhere</h3>
+                    <p>Access our platform on any device - desktop, tablet, or mobile.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="popular-quizzes">
+            <h2>Popular Quizzes</h2>
+            <div class="quiz-cards">
+                <c:forEach items="${popularQuizzes}" var="quiz">
+                    <div class="quiz-card">
+                        <div class="quiz-info">
+                            <h3>${quiz.title}</h3>
+                            <p>${quiz.description}</p>
+                            <div class="quiz-meta">
+                                <span class="category">${quiz.category}</span>
+                                <span class="difficulty ${quiz.difficulty.toLowerCase()}">${quiz.difficulty}</span>
+                                <span class="questions">${quiz.questionCount} Questions</span>
+                            </div>
+                        </div>
+                        <c:choose>
+                            <c:when test="${empty sessionScope.user}">
+                                <a href="${pageContext.request.contextPath}/auth/login" class="btn primary">Sign In to Start</a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="${pageContext.request.contextPath}/quiz/start/${quiz.id}" class="btn primary">Start Quiz</a>
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
+                </c:forEach>
+            </div>
+            <div class="view-all">
+                <a href="${pageContext.request.contextPath}/quizzes" class="btn secondary">View All Quizzes</a>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <div class="cta-content">
+                <h2>Ready to Challenge Your Knowledge?</h2>
+                <p>Join thousands of users who are expanding their knowledge and having fun with our quizzes.</p>
+                <c:choose>
+                    <c:when test="${empty sessionScope.user}">
+                        <a href="${pageContext.request.contextPath}/auth/register" class="btn primary">Get Started Now</a>
+                    </c:when>
+                    <c:otherwise>
+                        <a href="${pageContext.request.contextPath}/quizzes" class="btn primary">Find New Quizzes</a>
+                    </c:otherwise>
+                </c:choose>
+            </div>
+        </section>
+    </div>
+
+    <jsp:include page="include/footer.jsp" />
+    
+    <script>
+        $(document).ready(function() {
+            // Animation for features on scroll
+            $(window).scroll(function() {
+                $('.feature-card').each(function() {
+                    var position = $(this).offset().top;
+                    var scroll = $(window).scrollTop();
+                    var windowHeight = $(window).height();
+                    
+                    if (scroll > position - windowHeight + 100) {
+                        $(this).addClass('animated');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

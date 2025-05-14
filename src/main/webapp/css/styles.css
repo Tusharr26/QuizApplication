@@ -1,0 +1,165 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f4f6f8;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    width: 90%;
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Header/Footer include containers (optional) */
+header, footer {
+    background: #0d6efd;
+    color: #fff;
+    padding: 16px;
+    text-align: center;
+}
+
+/* Quiz Info */
+.quiz-container h1 {
+    margin-bottom: 8px;
+    font-size: 28px;
+    color: #0d6efd;
+}
+
+.quiz-container p {
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+/* Progress Bar */
+.quiz-progress {
+    margin-bottom: 24px;
+}
+
+.progress-bar {
+    width: 100%;
+    background: #ddd;
+    height: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.progress {
+    height: 10px;
+    background: #0d6efd;
+    transition: width 0.3s ease-in-out;
+}
+
+/* Question Card */
+.question-card {
+    margin-top: 20px;
+}
+
+.question-card h2 {
+    font-size: 20px;
+    margin-bottom: 16px;
+}
+
+.options-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.option {
+    background: #f0f0f0;
+    border-radius: 8px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+}
+
+.option input[type="radio"] {
+    margin-right: 10px;
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.btn.primary {
+    background-color: #0d6efd;
+    color: white;
+}
+
+.btn.primary:hover {
+    background-color: #0b5ed7;
+}
+
+/* Feedback Container */
+.feedback-container {
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.feedback-container.correct {
+    background-color: #d1e7dd;
+    color: #0f5132;
+}
+
+.feedback-container.incorrect {
+    background-color: #f8d7da;
+    color: #842029;
+}
+
+/* Completion Screen */
+.quiz-completed {
+    padding: 30px;
+    background: #e2f0fb;
+    border: 2px solid #0d6efd;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.quiz-completed h2 {
+    margin-bottom: 10px;
+    color: #0d6efd;
+}
+
+/* Error Messages */
+.error-message {
+    color: red;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .container {
+        padding: 15px;
+    }
+
+    .question-card h2 {
+        font-size: 18px;
+    }
+
+    .btn {
+        width: 100%;
+        text-align: center;
+    }
+}
